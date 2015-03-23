@@ -3,6 +3,7 @@ coffee      = require 'gulp-coffee'
 compass     = require 'gulp-compass'
 concat      = require 'gulp-concat'
 haml        = require 'gulp-ruby-haml'
+del         = require 'del'
 watch       = require 'gulp-watch'
 webserver   = require 'gulp-webserver'
 runSequence = require 'run-sequence'
@@ -39,6 +40,9 @@ gulp.task 'copy', ->
   .pipe gulp.dest "#{dir.dist}/assets/js"
   gulp.src ["#{dir.src}/fonts/**/*"]
   .pipe gulp.dest "#{dir.dist}/assets/fonts"
+
+gulp.task 'clean', (cb)->
+  del ['public'], cb
 
 gulp.task 'webserver', ->
   gulp.src "#{dir.dist}"
@@ -77,10 +81,9 @@ gulp.task 'compile', ->
     'copy'
     )
 
-gulp.task 'build', ->
+gulp.task 'build', ['clean'], ->
   runSequence(
-    'compile',
-    'build'
+    ['compile']
     )
 
 ##################################################
