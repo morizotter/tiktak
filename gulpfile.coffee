@@ -1,8 +1,6 @@
 gulp        = require 'gulp'
 coffee      = require 'gulp-coffee'
-uglify      = require 'gulp-uglify'
 compass     = require 'gulp-compass'
-minifyCss   = require 'gulp-minify-css'
 concat      = require 'gulp-concat'
 haml        = require 'gulp-ruby-haml'
 watch       = require 'gulp-watch'
@@ -17,29 +15,15 @@ dir =
 gulp.task 'coffee', ->
   gulp.src "#{dir.src}/coffee/**/*.coffee"
   .pipe coffee()
-  .pipe gulp.dest "#{dir.src}/js"
-
-gulp.task 'uglify', ->
-  compileFileName = 'application.js'
-  gulp.src "#{dir.src}/js/**/*.js"
-  .pipe concat(compileFileName)
-  .pipe uglify()
-  .pipe gulp.dest "#{dir.dist}/asset/js"
+  .pipe gulp.dest "#{dir.dist}/assets/js"
 
 gulp.task 'compass', ->
   gulp.src "#{dir.src}/scss/**/*.scss"
   .pipe compass({
     config_file: 'config.rb'
-    css: "#{dir.src}/css/"
     sass: "#{dir.src}/scss/"
+    css: "#{dir.src}/css/"
   })
-
-gulp.task 'minify', ->
-  compileFileName = 'application.css'
-  gulp.src "#{dir.src}/css/**/*.css"
-  .pipe concat(compileFileName)
-  .pipe minifyCss()
-  .pipe gulp.dest "#{dir.dist}/asset/css"
 
 gulp.task 'haml', ->
   gulp.src "#{dir.src}/app/**/*.haml"
@@ -47,10 +31,14 @@ gulp.task 'haml', ->
   .pipe gulp.dest "#{dir.dist}"
 
 gulp.task 'copy', ->
-  gulp.src([
-    "#{dir.src}/image/**/*"
-  ])
-  .pipe gulp.dest "#{dir.dist}/asset/image"
+  gulp.src ["#{dir.src}/image/**/*"]
+  .pipe gulp.dest "#{dir.dist}/assets/image"
+  gulp.src ["#{dir.src}/css/**/*"]
+  .pipe gulp.dest "#{dir.dist}/assets/css"
+  gulp.src ["#{dir.src}/js/**/*"]
+  .pipe gulp.dest "#{dir.dist}/assets/js"
+  gulp.src ["#{dir.src}/fonts/**/*"]
+  .pipe gulp.dest "#{dir.dist}/assets/fonts"
 
 gulp.task 'webserver', ->
   gulp.src "#{dir.dist}"
@@ -62,15 +50,9 @@ gulp.task 'webserver', ->
     })
   )
 
-##################################################
-# WATCH
-##################################################
-
 gulp.task 'watch', ->
   gulp.watch [
-    "#{dir.src}/scss/**/*.scss",
-    "#{dir.src}/coffee/**/*.coffee",
-    "#{dir.src}/app/**/*.haml"
+    "#{dir.src}/**/*"
     ],
     ['build']
 
@@ -81,7 +63,8 @@ gulp.task 'watch', ->
 gulp.task 'serve', ->
   runSequence(
     ['build'],
-    ['webserver']
+    ['webserver'],
+    'watch'
     )
 
 ##################################################
@@ -90,15 +73,9 @@ gulp.task 'serve', ->
 
 gulp.task 'compile', ->
    runSequence(
-    ['coffee','compass','haml'],
-    ['uglify', 'minify'],
+    ['haml','coffee','compass'],
     'copy'
     )
-
-gulp.task 'copy', ->
- runSequence(
-  'copy'
-  )
 
 gulp.task 'build', ->
   runSequence(
