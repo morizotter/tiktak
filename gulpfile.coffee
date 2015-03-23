@@ -28,11 +28,11 @@ gulp.task 'uglify', ->
 
 gulp.task 'compass', ->
   gulp.src "#{dir.src}/scss/**/*.scss"
-  .pipe(compass({
+  .pipe compass({
     config_file: 'config.rb'
     css: "#{dir.src}/css/"
     sass: "#{dir.src}/scss/"
-  }))
+  })
 
 gulp.task 'minify', ->
   compileFileName = 'application.css'
@@ -62,21 +62,53 @@ gulp.task 'webserver', ->
     })
   )
 
-gulp.task 'build', ->
- runSequence(
-  ['coffee','compass','haml'],
-  ['uglify', 'minify'],
-  'copy'
-  )
+##################################################
+# WATCH
+##################################################
 
 gulp.task 'watch', ->
-  gulp.watch ["#{dir.src}/scss/**/*.scss", "#{dir.src}/coffee/**/*.coffee", "#{dir.src}/app/**/*.haml"], ['build']
+  gulp.watch [
+    "#{dir.src}/scss/**/*.scss",
+    "#{dir.src}/coffee/**/*.coffee",
+    "#{dir.src}/app/**/*.haml"
+    ],
+    ['build']
+
+##################################################
+# SERVE
+##################################################
 
 gulp.task 'serve', ->
   runSequence(
     ['build'],
     ['webserver']
     )
+
+##################################################
+# BUILD
+##################################################
+
+gulp.task 'compile', ->
+   runSequence(
+    ['coffee','compass','haml'],
+    ['uglify', 'minify'],
+    'copy'
+    )
+
+gulp.task 'copy', ->
+ runSequence(
+  'copy'
+  )
+
+gulp.task 'build', ->
+  runSequence(
+    'compile',
+    'build'
+    )
+
+##################################################
+# DEPLOY
+##################################################
 
 gulp.task 'deploy', ->
   gulp.src 'public/**/*'
