@@ -3,6 +3,7 @@ coffee      = require 'gulp-coffee'
 compass     = require 'gulp-compass'
 concat      = require 'gulp-concat'
 haml        = require 'gulp-ruby-haml'
+bowerFiles  = require 'main-bower-files'
 del         = require 'del'
 watch       = require 'gulp-watch'
 webserver   = require 'gulp-webserver'
@@ -30,6 +31,10 @@ gulp.task 'haml', ->
   gulp.src "#{dir.src}/app/**/*.haml"
   .pipe haml({ doubleQuote: true })
   .pipe gulp.dest "#{dir.dist}"
+
+gulp.task "bowerFiles", ->
+    gulp.src bowerFiles()
+    .pipe gulp.dest "#{dir.dist}/lib"
 
 gulp.task 'copy', ->
   gulp.src ["#{dir.src}/image/**/*"]
@@ -89,6 +94,6 @@ gulp.task 'build', ->
 # DEPLOY
 ##################################################
 
-gulp.task 'deploy', ['clean'], ->
+gulp.task 'deploy', ->
   gulp.src 'public/**/*'
   .pipe ghPages()

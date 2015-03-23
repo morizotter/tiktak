@@ -18,6 +18,7 @@
     "gulp-ruby-haml": "0.0.3",
     "gulp-watch": "^4.2.0",
     "gulp-webserver": "^0.9.0",
+    "main-bower-files": "^2.6.2",
     "run-sequence": "^1.0.2"
   },
   "dependencies": {
