@@ -66,7 +66,6 @@ gulp.task 'watch', ->
 
 gulp.task 'serve', ->
   runSequence(
-    ['build'],
     ['webserver'],
     'watch'
     )
@@ -81,7 +80,7 @@ gulp.task 'compile', ->
     'copy'
     )
 
-gulp.task 'build', ['clean'], ->
+gulp.task 'build', ->
   runSequence(
     ['compile']
     )
@@ -90,6 +89,6 @@ gulp.task 'build', ['clean'], ->
 # DEPLOY
 ##################################################
 
-gulp.task 'deploy', ->
+gulp.task 'deploy', ['clean'], ->
   gulp.src 'public/**/*'
   .pipe ghPages()
