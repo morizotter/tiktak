@@ -3,7 +3,7 @@ coffee      = require 'gulp-coffee'
 compass     = require 'gulp-compass'
 concat      = require 'gulp-concat'
 haml        = require 'gulp-ruby-haml'
-bowerFiles  = require 'main-bower-files'
+bower       = require 'gulp-bower'
 del         = require 'del'
 watch       = require 'gulp-watch'
 webserver   = require 'gulp-webserver'
@@ -32,9 +32,9 @@ gulp.task 'haml', ->
   .pipe haml({ doubleQuote: true })
   .pipe gulp.dest "#{dir.dist}"
 
-gulp.task "bowerFiles", ->
-    gulp.src bowerFiles()
-    .pipe gulp.dest "#{dir.dist}/lib"
+gulp.task "bower", ->
+  bower()
+  .pipe gulp.dest "#{dir.dist}/lib"
 
 gulp.task 'copy', ->
   gulp.src ["#{dir.src}/image/**/*"]
@@ -53,7 +53,7 @@ gulp.task 'webserver', ->
   gulp.src "#{dir.dist}"
   .pipe(webserver({
     livereload: true
-    port: 9000
+    port: 9001
     fallback: "#{dir.dist}/index.html"
     open: true
     })
@@ -81,7 +81,7 @@ gulp.task 'serve', ->
 
 gulp.task 'compile', ->
    runSequence(
-    ['haml','coffee','compass'],
+    ['haml','coffee','compass','bower'],
     'copy'
     )
 
