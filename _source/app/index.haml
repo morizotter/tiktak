@@ -3,8 +3,9 @@
 %head
   %meta{:charset => "UTF-8"}
   %title tiktak
-  %link{:rel => "stylesheet", :href => "assets/css/styles.css"}
-  %link{:rel => "stylesheet", :href => "lib/fontawesome/css/font-awesome.css"}
+
+  / inject:css
+  / endinject
 %body
   .container
     %h1 tiktak
@@ -17,5 +18,5 @@
         bbb
         %i.fa.fa-bed
 
-  %script{:src => "lib/jquery.js", :type => "text/javascript"}
-  %script{:src => "assets/js/bootstrap.min.js", :type => "text/javascript"}
+  / inject:js
+  / endinject

@@ -4,6 +4,7 @@ sass        = require 'gulp-ruby-sass'
 concat      = require 'gulp-concat'
 haml        = require 'gulp-ruby-haml'
 bower       = require 'gulp-bower'
+inject      = require 'gulp-inject'
 del         = require 'del'
 watch       = require 'gulp-watch'
 webserver   = require 'gulp-webserver'
@@ -24,9 +25,9 @@ gulp.task 'sass', ->
   .pipe gulp.dest "#{conf.dist_dir}/assets/css"
 
 gulp.task 'haml', ->
-  gulp.src "#{conf.src_dir}/assets/app/**/*.haml"
+  gulp.src "#{conf.src_dir}/app/**/*.haml"
   .pipe haml({ doubleQuote: true })
-  .pipe gulp.dest "#{conf.dist_dir}"
+  .pipe gulp.dest "#{conf.dist_dir}/assets/html"
 
 gulp.task "bower", ->
   bower()
@@ -41,6 +42,12 @@ gulp.task 'copy', ->
   .pipe gulp.dest "#{conf.dist_dir}/assets/js"
   gulp.src ["#{conf.src_dir}/assets/fonts/**/*"]
   .pipe gulp.dest "#{conf.dist_dir}/assets/fonts"
+
+gulp.task 'inject', ->
+  gulp.src "#{conf.dist_dir}/assets/html/**/*.html"
+  .pipe inject(gulp.src("#{conf.dist_dir}/assets/css/**/*.css" , {read: false}), {relative: true})
+  .pipe inject(gulp.src("#{conf.dist_dir}/assets/js/**/*.js" , {read: false}), {relative: true})
+  .pipe gulp.dest "#{conf.dist_dir}/"
 
 gulp.task 'clean', (cb)->
   del ['public'], cb
@@ -78,7 +85,8 @@ gulp.task 'serve', ->
 gulp.task 'compile', ->
    runSequence(
     ['haml','coffee','sass','bower'],
-    'copy'
+    'copy',
+    'inject'
     )
 
 gulp.task 'build', ->
