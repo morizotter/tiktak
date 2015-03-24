@@ -1,6 +1,6 @@
 gulp        = require 'gulp'
 coffee      = require 'gulp-coffee'
-compass     = require 'gulp-compass'
+sass        = require 'gulp-ruby-sass'
 concat      = require 'gulp-concat'
 haml        = require 'gulp-ruby-haml'
 bower       = require 'gulp-bower'
@@ -10,58 +10,54 @@ webserver   = require 'gulp-webserver'
 runSequence = require 'run-sequence'
 ghPages     = require 'gulp-gh-pages'
 
-dir =
-  src: '_source'
-  dist: 'public'
+conf =
+  src_dir: '_source'
+  dist_dir: 'public'
 
 gulp.task 'coffee', ->
-  gulp.src "#{dir.src}/coffee/**/*.coffee"
+  gulp.src "#{conf.src_dir}/assets/coffee/**/*.coffee"
   .pipe coffee()
-  .pipe gulp.dest "#{dir.dist}/assets/js"
+  .pipe gulp.dest "#{conf.dist_dir}/assets/js"
 
-gulp.task 'compass', ->
-  gulp.src "#{dir.src}/scss/**/*.scss"
-  .pipe compass({
-    config_file: 'config.rb'
-    sass: "#{dir.src}/scss/"
-    css: "#{dir.src}/css/"
-  })
+gulp.task 'sass', ->
+  sass "#{conf.src_dir}/assets/scss/"
+  .pipe gulp.dest "#{conf.dist_dir}/assets/css"
 
 gulp.task 'haml', ->
-  gulp.src "#{dir.src}/app/**/*.haml"
+  gulp.src "#{conf.src_dir}/assets/app/**/*.haml"
   .pipe haml({ doubleQuote: true })
-  .pipe gulp.dest "#{dir.dist}"
+  .pipe gulp.dest "#{conf.dist_dir}"
 
 gulp.task "bower", ->
   bower()
-  .pipe gulp.dest "#{dir.dist}/lib"
+  .pipe gulp.dest "#{conf.dist_dir}/lib"
 
 gulp.task 'copy', ->
-  gulp.src ["#{dir.src}/image/**/*"]
-  .pipe gulp.dest "#{dir.dist}/assets/image"
-  gulp.src ["#{dir.src}/css/**/*"]
-  .pipe gulp.dest "#{dir.dist}/assets/css"
-  gulp.src ["#{dir.src}/js/**/*"]
-  .pipe gulp.dest "#{dir.dist}/assets/js"
-  gulp.src ["#{dir.src}/fonts/**/*"]
-  .pipe gulp.dest "#{dir.dist}/assets/fonts"
+  gulp.src ["#{conf.src_dir}/assets/image/**/*"]
+  .pipe gulp.dest "#{conf.dist_dir}/assets/image"
+  gulp.src ["#{conf.src_dir}/assets/css/**/*"]
+  .pipe gulp.dest "#{conf.dist_dir}/assets/css"
+  gulp.src ["#{conf.src_dir}/assets/js/**/*"]
+  .pipe gulp.dest "#{conf.dist_dir}/assets/js"
+  gulp.src ["#{conf.src_dir}/assets/fonts/**/*"]
+  .pipe gulp.dest "#{conf.dist_dir}/assets/fonts"
 
 gulp.task 'clean', (cb)->
   del ['public'], cb
 
 gulp.task 'webserver', ->
-  gulp.src "#{dir.dist}"
+  gulp.src "#{conf.dist_dir}"
   .pipe(webserver({
     livereload: true
     port: 9001
-    fallback: "#{dir.dist}/index.html"
+    fallback: "#{conf.dist_dir}/index.html"
     open: true
     })
   )
 
 gulp.task 'watch', ->
   gulp.watch [
-    "#{dir.src}/**/*"
+    "#{conf.src_dir}/assets/**/*"
     ],
     ['build']
 
@@ -81,7 +77,7 @@ gulp.task 'serve', ->
 
 gulp.task 'compile', ->
    runSequence(
-    ['haml','coffee','compass','bower'],
+    ['haml','coffee','sass','bower'],
     'copy'
     )
 
