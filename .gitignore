@@ -1,2 +1,9 @@
+node_modules
+bower_components
+
+
 public
+.sass-cache
+.publish
 .tmp
+

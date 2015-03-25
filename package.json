@@ -1,5 +1,5 @@
 {
-  "name": "gulp-trial",
+  "name": "tiktak",
   "version": "1.0.0",
   "description": "TikTak Project",
   "main": "index.html",
@@ -26,5 +26,9 @@
   },
   "dependencies": {
     "del": "^1.1.1"
+  },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/morizotter/tiktak.git"
   }
 }
