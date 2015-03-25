@@ -24,7 +24,7 @@ conf =
 gulp.task 'haml', ->
   gulp.src "#{conf.src_dir}/app/**/*.haml"
   .pipe haml({ doubleQuote: true })
-  .pipe gulp.dest "#{conf.tmp_dir}/assets/html"
+  .pipe gulp.dest "#{conf.tmp_dir}/"
 
 gulp.task 'coffee', ->
   gulp.src "#{conf.src_dir}/assets/coffee/**/*.coffee"
@@ -45,7 +45,7 @@ gulp.task 'inject', ->
   jquery = gulp.src("#{conf.tmp_dir}/lib/jquery/dist/jquery.js" , {read: false})
   js = gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false})
 
-  gulp.src "#{conf.tmp_dir}/assets/html/**/*.html"
+  gulp.src "#{conf.tmp_dir}/**/*.html"
   .pipe inject(
     series(
       fontAwesome,
