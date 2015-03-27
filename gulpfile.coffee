@@ -1,6 +1,6 @@
 gulp        = require 'gulp'
 coffee      = require 'gulp-coffee'
-sass        = require 'gulp-ruby-sass'
+sass        = require 'gulp-sass'
 plumber     = require 'gulp-plumber'
 concat      = require 'gulp-concat'
 haml        = require 'gulp-ruby-haml'
@@ -17,7 +17,7 @@ ghPages     = require 'gulp-gh-pages'
 
 conf =
   src_dir: '_source'
-  dist_dir: 'public'
+  dist_dir: '_public'
   tmp_dir: '.tmp'
 
 ## COMPILE
@@ -33,7 +33,8 @@ gulp.task 'coffee', ->
   .pipe gulp.dest "#{conf.tmp_dir}/assets/js"
 
 gulp.task 'sass', ->
-  sass "#{conf.src_dir}/assets/scss/", {style: 'expanded'}
+  gulp.src "#{conf.src_dir}/assets/scss/"
+  .pipe sass()
   .pipe plumber()
   .pipe gulp.dest "#{conf.tmp_dir}/assets/css"
 
