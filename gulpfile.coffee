@@ -1,6 +1,7 @@
 gulp        = require 'gulp'
 coffee      = require 'gulp-coffee'
 sass        = require 'gulp-ruby-sass'
+plumber     = require 'gulp-plumber'
 concat      = require 'gulp-concat'
 haml        = require 'gulp-ruby-haml'
 bower       = require 'gulp-bower'
@@ -33,6 +34,7 @@ gulp.task 'coffee', ->
 
 gulp.task 'sass', ->
   sass "#{conf.src_dir}/assets/scss/"
+  .pipe(plumber)
   .pipe gulp.dest "#{conf.tmp_dir}/assets/css"
 
 gulp.task "bower", ->
@@ -40,10 +42,10 @@ gulp.task "bower", ->
   .pipe gulp.dest "#{conf.tmp_dir}/lib"
 
 gulp.task 'inject', ->
-  fontAwesome = gulp.src("#{conf.tmp_dir}/lib/fontawesome/css/font-awesome.css" , {read: false})
-  css = gulp.src("#{conf.tmp_dir}/assets/css/**/*.css" , {read: false})
-  jquery = gulp.src("#{conf.tmp_dir}/lib/jquery/dist/jquery.js" , {read: false})
-  js = gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false})
+  fontAwesome     = gulp.src("#{conf.tmp_dir}/lib/fontawesome/css/font-awesome.css" , {read: false})
+  css             = gulp.src("#{conf.tmp_dir}/assets/css/**/*.css" , {read: false})
+  jquery          = gulp.src("#{conf.tmp_dir}/lib/jquery/dist/jquery.js" , {read: false})
+  js              = gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false})
 
   gulp.src "#{conf.tmp_dir}/**/*.html"
   .pipe inject(
@@ -55,17 +57,6 @@ gulp.task 'inject', ->
     ), {relative: true}
   )
   .pipe gulp.dest "#{conf.tmp_dir}/"
-
-
-  # gulp.src "#{conf.tmp_dir}/assets/html/**/*.html"
-
-  # .pipe inject(gulp.src("#{conf.tmp_dir}/lib/fontawesome/css/font-awesome.css" , {read: false}), {relative: true})
-  # .pipe inject(gulp.src("#{conf.tmp_dir}/assets/css/**/*.css" , {read: false}), {relative: true})
-  # .pipe inject(gulp.src("#{conf.tmp_dir}/lib/fontawesome/fonts/*" , {read: false}), {relative: true})
-  # .pipe inject(gulp.src("#{conf.tmp_dir}/lib/jquery/dist/jquery.js" , {read: false}), {relative: true})
-  # .pipe inject(gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false}), {relative: true})
-
-  # .pipe gulp.dest "#{conf.tmp_dir}/"
 
 ## COPY
 
