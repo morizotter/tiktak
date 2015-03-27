@@ -33,8 +33,8 @@ gulp.task 'coffee', ->
   .pipe gulp.dest "#{conf.tmp_dir}/assets/js"
 
 gulp.task 'sass', ->
-  sass "#{conf.src_dir}/assets/scss/"
-  .pipe(plumber)
+  sass "#{conf.src_dir}/assets/scss/", {style: 'expanded'}
+  .pipe plumber()
   .pipe gulp.dest "#{conf.tmp_dir}/assets/css"
 
 gulp.task "bower", ->
@@ -43,16 +43,23 @@ gulp.task "bower", ->
 
 gulp.task 'inject', ->
   fontAwesome     = gulp.src("#{conf.tmp_dir}/lib/fontawesome/css/font-awesome.css" , {read: false})
+  bootstrapCss    = gulp.src("#{conf.tmp_dir}/lib/bootstrap/dist/css/bootstrap.css" , {read: false})
+  bootstrapTheme  = gulp.src("#{conf.tmp_dir}/lib/bootstrap/dist/css/bootstrap-theme.css" , {read: false})
   css             = gulp.src("#{conf.tmp_dir}/assets/css/**/*.css" , {read: false})
+
   jquery          = gulp.src("#{conf.tmp_dir}/lib/jquery/dist/jquery.js" , {read: false})
+  bootstrapJs     = gulp.src("#{conf.tmp_dir}/lib/bootstrap/dist/js/bootstrap.js" , {read: false})
   js              = gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false})
 
   gulp.src "#{conf.tmp_dir}/**/*.html"
   .pipe inject(
     series(
       fontAwesome,
+      bootstrapCss,
+      bootstrapTheme,
       css,
       jquery,
+      bootstrapJs,
       js
     ), {relative: true}
   )
@@ -105,6 +112,7 @@ gulp.task 'gh-pages', ->
 
 gulp.task 'serve', ->
   runSequence(
+    'build',
     ['webserver'],
     'watch'
     )

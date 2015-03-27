@@ -1,14 +1,27 @@
 !!!
-%html{:lang => "en"}
+%html{ "lang" => "en"}
 %head
-  %meta{:charset => "UTF-8"}
+  %meta{ "charset" => "UTF-8"}
+  %meta{ "http-equiv" => "X-UA-Compatible", "content" => "IE=edge"}
+  %meta{ "name" => "viewport", "content" => "width=device-width, initial-scale=1.0" }
   %title tiktak
 
   / inject:css
   / endinject
 %body
-  %h1 tiktak
-  %p tiktak is tiktak.
+  .container-fluid
+    .row
+      %h1
+        tiktak
+        %small tktk
+      %p tiktak is tiktak.
+    .row-fluid
+      .col-md-4
+        %p tik
+      .col-md-4
+        %p tak
+      .col-md-4
+        %p pop
 
   / inject:js
   / endinject
