@@ -1,5 +1,5 @@
 !!!
-%html{ "lang" => "en"}
+%html{ "lang" => "en", "ng-app" => ""}
 %head
   %meta{ "charset" => "UTF-8"}
   %meta{ "http-equiv" => "X-UA-Compatible", "content" => "IE=edge"}
@@ -13,12 +13,13 @@
     .row
       %h1
         tiktak
-        %small tktka
+        %small tktk
       %p tiktak is tiktak.
     .row-fluid
       .col-md-4
-        %span.glyphicon.glyphicon-search{ "aria-hidden" => "true" }
-        %p tik
+        %label Name:
+        %input{ "type" => "text", "ng-model" => "yourname", "placeholder" => "Enter a name here" }
+        %p Hello {{ yourname }}
       .col-md-4
         %p tak
       .col-md-4

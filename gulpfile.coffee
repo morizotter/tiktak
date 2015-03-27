@@ -49,6 +49,7 @@ gulp.task 'inject', ->
   css             = gulp.src("#{conf.tmp_dir}/assets/css/**/*.css" , {read: false})
 
   jquery          = gulp.src("#{conf.tmp_dir}/lib/jquery/dist/jquery.js" , {read: false})
+  angularJs       = gulp.src("#{conf.tmp_dir}/lib/angular/angular.js" , {read: false})
   bootstrapJs     = gulp.src("#{conf.tmp_dir}/lib/bootstrap/dist/js/bootstrap.js" , {read: false})
   js              = gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false})
 
@@ -60,6 +61,7 @@ gulp.task 'inject', ->
       bootstrapTheme,
       css,
       jquery,
+      angularJs,
       bootstrapJs,
       js
     ), {relative: true}
