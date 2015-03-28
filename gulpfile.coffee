@@ -33,7 +33,7 @@ gulp.task 'coffee', ->
   .pipe gulp.dest "#{conf.tmp_dir}/assets/js"
 
 gulp.task 'sass', ->
-  gulp.src "#{conf.src_dir}/assets/scss/"
+  gulp.src "#{conf.src_dir}/assets/scss/**/*.scss"
   .pipe sass()
   .pipe plumber()
   .pipe gulp.dest "#{conf.tmp_dir}/assets/css"

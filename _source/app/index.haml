@@ -1,5 +1,5 @@
 !!!
-%html{ "lang" => "en", "ng-app" => ""}
+%html{ "lang" => "en", "ng-app" => "app"}
 %head
   %meta{ "charset" => "UTF-8"}
   %meta{ "http-equiv" => "X-UA-Compatible", "content" => "IE=edge"}
@@ -8,22 +8,29 @@
 
   / inject:css
   / endinject
+
 %body
-  .container-fluid
+  .container
     .row
-      %h1
-        tiktak
-        %small tktk
-      %p tiktak is tiktak.
-    .row-fluid
-      .col-md-4
-        %label Name:
-        %input{ "type" => "text", "ng-model" => "yourname", "placeholder" => "Enter a name here" }
-        %p Hello {{ yourname }}
-      .col-md-4
-        %p tak
-      .col-md-4
-        %p pop
+      .page-header
+        %h1
+          Tiktak
+          %small Tiktak project
+
+    .row
+      %h2 Todo
+      %div{ "ng-controller" => "TodoController" }
+        %span {{ remaining() }} of {{ todos.length }} remaining
+        [
+        %a{ "href" => "", "ng-click" => "archive()" } archive
+        ]
+        %ul.list-unstyled
+          %li{ "ng-repeat" => "todo in todos" }
+            %input{ "type" => "checkbox", "ng-model" => "todo.done" }
+            %span{{ "ng-class" => "{ 'done-true': todo.done }" }} {{ todo.text }}
+        %form{ "ng-submit" => "addTodo()" }
+          %input{ "type" => "text", "ng-model" => "todoText", "size" => "30", "placeholder" => "add new todo here" }
+          %input.btn.btn-primary{ "type" => "submit", "value" => "add"}
 
   / inject:js
   / endinject
