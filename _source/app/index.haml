@@ -12,25 +12,27 @@
 %body
   .container
     .row
-      .page-header
-        %h1
-          Tiktak
-          %small Tiktak project
+      .col-md-12
+        .page-header
+          %h1
+            Tiktak
+            %small Tiktak project
 
     .row
-      %h2 Todo
-      %div{ "ng-controller" => "TodoController" }
-        %span {{ remaining() }} of {{ todos.length }} remaining
-        [
-        %a{ "href" => "", "ng-click" => "archive()" } archive
-        ]
-        %ul.list-unstyled
-          %li{ "ng-repeat" => "todo in todos" }
-            %input{ "type" => "checkbox", "ng-model" => "todo.done" }
-            %span{{ "ng-class" => "{ 'done-true': todo.done }" }} {{ todo.text }}
-        %form{ "ng-submit" => "addTodo()" }
-          %input{ "type" => "text", "ng-model" => "todoText", "size" => "30", "placeholder" => "add new todo here" }
-          %input.btn.btn-primary{ "type" => "submit", "value" => "add"}
+      .col-md-12
+        %h2 Todo
+        %div{ "ng-controller" => "TodoController", "ng-cloak" => "" }
+          %span {{ remaining() }} of {{ todos.length }} remaining
+          [
+          %a{ "href" => "", "ng-click" => "archive()" } archive
+          ]
+          %ul.list-unstyled
+            %li{ "ng-repeat" => "todo in todos"}
+              %input{ "type" => "checkbox", "ng-model" => "todo.done" }
+              %span{{ "ng-class" => "{ 'done-true': todo.done }" }} {{ todo.text }}
+          %form{ "ng-submit" => "addTodo()" }
+            %input{ "type" => "text", "ng-model" => "todoText", "size" => "30", "placeholder" => "add new todo here" }
+            %input.btn.btn-primary{ "type" => "submit", "value" => "add"}
 
   / inject:js
   / endinject
