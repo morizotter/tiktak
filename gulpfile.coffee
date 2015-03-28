@@ -49,6 +49,7 @@ gulp.task 'inject', ->
   css             = gulp.src("#{conf.tmp_dir}/assets/css/**/*.css" , {read: false})
 
   jquery          = gulp.src("#{conf.tmp_dir}/lib/jquery/dist/jquery.js" , {read: false})
+  underscore      = gulp.src("#{conf.tmp_dir}/lib/underscore/underscore.js" , {read: false})
   angularJs       = gulp.src("#{conf.tmp_dir}/lib/angular/angular.js" , {read: false})
   bootstrapJs     = gulp.src("#{conf.tmp_dir}/lib/bootstrap/dist/js/bootstrap.js" , {read: false})
   js              = gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false})
@@ -61,6 +62,7 @@ gulp.task 'inject', ->
       bootstrapTheme,
       css,
       jquery,
+      underscore,
       angularJs,
       bootstrapJs,
       js
@@ -106,7 +108,7 @@ gulp.task 'watch', ->
 ## DEPLOY
 
 gulp.task 'gh-pages', ->
-  gulp.src "#{conf.tmp_dir}/**/*"
+  gulp.src "#{conf.dist_dir}/**/*"
   .pipe ghPages()
 
 ##################################################
