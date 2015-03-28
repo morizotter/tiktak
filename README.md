@@ -1,3 +1,0 @@
-# tiktak
-
-This is tiktak.
