@@ -106,7 +106,7 @@ gulp.task 'watch', ->
 ## DEPLOY
 
 gulp.task 'gh-pages', ->
-  gulp.src 'public/**/*'
+  gulp.src "#{conf.tmp_dir}/**/*"
   .pipe ghPages()
 
 ##################################################
