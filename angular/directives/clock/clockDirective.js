@@ -17,6 +17,7 @@
           return this.text = "controller";
         }
       ],
+      controllerAs: 'ctrl',
       link: function(scope, element, attrs, ctrl) {
         scope.text = "test";
         return scope.time = ctrl.currentTime();
