@@ -5,6 +5,7 @@ clockDirective = ->
     text: "@"
   controller: ['$scope', '$interval', ($scope, $interval) ->
     $scope.time = "--:--:--"
+    $scope.text = "Tokyo"
     @updateClock = ->
       date = new Date()
       hours = date.getHours()
@@ -12,14 +13,9 @@ clockDirective = ->
       seconds = date.getSeconds()
       $scope.time = "#{hours} : #{minutes} . #{seconds}"
 
-    $scope.text = "controller"
-
     $interval(@updateClock, 1000)
   ]
   controllerAs: "clockCtrl"
-  link: (scope, element, attrs, ctrl) ->
-    # scope.text = ctrl.text
-    # scope.time = ctrl.time
 
 angular.module('app')
 .directive 'clock', [clockDirective]

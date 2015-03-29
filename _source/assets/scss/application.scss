@@ -3,6 +3,39 @@
   text-decoration: line-through;
 }
 
+@mixin placeholder-color($color) {
+     &:-moz-placeholder {
+         color:$color;
+     }
+     &::-webkit-input-placeholder {
+         color:$color;
+     }
+ }
+
+/* Layout */
+
+/* Item */
+
+.search-field {
+  outline: none;
+  border: none;
+  background: none;
+  box-shadow: none;
+  border-radius: 0px;
+  border-bottom: 1px solid #dddddd;
+  height: 60px;
+  font-size: 40px;
+  text-align: center;
+  color: #222222;
+  @include placeholder-color(#eeeeee);
+  &:focus,  {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    border-bottom: 1px solid #dddddd;
+  }
+}
+
 .clock {
-  font-size: 80px;
+  font-size: 120px;
 }
