@@ -16,7 +16,14 @@
 
 /* Item */
 
+.title {
+  text-size: 20px;
+  color: #cccccc;
+}
+
 .search-field {
+  margin: 100px auto 100px auto;
+  padding: 0px;
   outline: none;
   border: none;
   background: none;
@@ -25,9 +32,9 @@
   border-bottom: 1px solid #dddddd;
   height: 60px;
   font-size: 40px;
-  text-align: center;
   color: #222222;
   @include placeholder-color(#eeeeee);
+  text-transform: uppercase;
   &:focus,  {
     border: none;
     box-shadow: none;
