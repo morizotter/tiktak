@@ -17,11 +17,11 @@
           %h1
             Tiktak
             %small Tiktak project
-            
+
     .row
       .col-md-12
         %h2 Todo
-        %div{ "ng-controller" => "TodoController", "ng-cloak" => "" }
+        %div{ "ng-controller" => "MainController", "ng-cloak" => "" }
           %span {{ remaining() }} of {{ todos.length }} remaining
           [
           %a{ "href" => "", "ng-click" => "archive()" } archive
