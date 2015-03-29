@@ -1,8 +1,7 @@
 node_modules
 bower_components
 
-
-public
+_public
 .sass-cache
 .publish
 .tmp

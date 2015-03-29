@@ -10,6 +10,7 @@ clockDirective = ->
 
     @text = "controller"
   ]
+  controllerAs: 'ctrl'
   link: (scope, element, attrs, ctrl) ->
     scope.text = "test"
     scope.time = ctrl.currentTime()
