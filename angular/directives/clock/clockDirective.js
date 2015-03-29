@@ -11,6 +11,7 @@
       controller: [
         '$scope', '$interval', function($scope, $interval) {
           $scope.time = "--:--:--";
+          $scope.text = "Tokyo";
           this.updateClock = function() {
             var date, hours, minutes, seconds;
             date = new Date();
@@ -19,12 +20,10 @@
             seconds = date.getSeconds();
             return $scope.time = hours + " : " + minutes + " . " + seconds;
           };
-          $scope.text = "controller";
           return $interval(this.updateClock, 1000);
         }
       ],
-      controllerAs: "clockCtrl",
-      link: function(scope, element, attrs, ctrl) {}
+      controllerAs: "clockCtrl"
     };
   };
 

@@ -2,5 +2,34 @@
   color: grey;
   text-decoration: line-through; }
 
+/* Layout */
+/* Item */
+.title {
+  text-size: 20px;
+  color: #cccccc; }
+
+.search-field {
+  margin: 100px auto 100px auto;
+  padding: 0px;
+  outline: none;
+  border: none;
+  background: none;
+  box-shadow: none;
+  border-radius: 0px;
+  border-bottom: 1px solid #dddddd;
+  height: 60px;
+  font-size: 40px;
+  color: #222222;
+  text-transform: uppercase; }
+  .search-field:-moz-placeholder {
+    color: #eeeeee; }
+  .search-field::-webkit-input-placeholder {
+    color: #eeeeee; }
+  .search-field:focus {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    border-bottom: 1px solid #dddddd; }
+
 .clock {
-  font-size: 80px; }
+  font-size: 120px; }
