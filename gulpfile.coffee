@@ -76,10 +76,10 @@ gulp.task 'inject', ->
   .pipe gulp.dest "#{conf.tmp_dir}/"
 
 gulp.task 'del:tmp', ->
-  del.sync ["#{conf.tmp_dir}"]
+  del.sync ["#{conf.tmp_dir}/**/*"]
 
 gulp.task 'del:dist', ->
-  del.sync ["#{conf.dist_dir}"]
+  del.sync ["#{conf.dist_dir}/**/"]
 
 ## COPY
 
@@ -121,9 +121,9 @@ gulp.task 'gh-pages', ->
 # SERVE
 ##################################################
 
-gulp.task 'serve', ->
+gulp.task 'serve', ['build'], ->
   runSequence(
-    ['build'],
+    # ['build'],
     ['webserver'],
     ['watch']
     )
@@ -132,24 +132,20 @@ gulp.task 'serve', ->
 # BUILD
 ##################################################
 
-gulp.task 'compile', ->
+gulp.task 'build', (cb) ->
    runSequence(
     ['del:tmp'],
     ['haml','coffee','sass','bower'],
     ['inject'],
-    ['copy:dev']
-    )
-
-gulp.task 'build', ->
-  runSequence(
-    ['compile']
+    ['copy:dev'],
+    cb
     )
 
 ##################################################
 # DEPLOY
 ##################################################
 
-gulp.task 'deploy', ->
+gulp.task 'deploy', ['build'], ->
   runSequence(
     ['del:dist'],
     ['copy:dist'],
