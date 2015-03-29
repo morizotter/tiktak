@@ -1,3 +1,6 @@
 .done-true {
   color: grey;
   text-decoration: line-through; }
+
+.clock {
+  font-size: 80px; }
