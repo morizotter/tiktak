@@ -9,7 +9,7 @@
   / inject:css
   / endinject
 
-%body
+%body{ "ng-controller" => "MainController"}
   .container
     .row
       .col-md-12
@@ -20,8 +20,9 @@
 
     .row
       .col-md-12
+        %div{ "clock" => "" }
         %h2 Todo
-        %div{ "ng-controller" => "MainController", "ng-cloak" => "" }
+        %div{ "ng-cloak" => "" }
           %span {{ remaining() }} of {{ todos.length }} remaining
           [
           %a{ "href" => "", "ng-click" => "archive()" } archive

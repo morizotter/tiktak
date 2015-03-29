@@ -28,6 +28,9 @@ gulp.task 'haml', ->
   .pipe gulp.dest "#{conf.tmp_dir}/"
 
 gulp.task 'coffee', ->
+  gulp.src "#{conf.src_dir}/app/**/*.coffee"
+    .pipe coffee()
+    .pipe gulp.dest "#{conf.tmp_dir}/"
   gulp.src "#{conf.src_dir}/assets/coffee/**/*.coffee"
   .pipe coffee()
   .pipe gulp.dest "#{conf.tmp_dir}/assets/js"
