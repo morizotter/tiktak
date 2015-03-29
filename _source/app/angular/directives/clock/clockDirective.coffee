@@ -1,19 +1,25 @@
 clockDirective = ->
   templateUrl: "angular/directives/clock/clockDirective.html"
-  controller: ['$scope', ($scope) ->
-    @currentTime = ->
+  scope:
+    time: "@"
+    text: "@"
+  controller: ['$scope', '$interval', ($scope, $interval) ->
+    $scope.time = "--:--:--"
+    @updateClock = ->
       date = new Date()
       hours = date.getHours()
       minutes = date.getMinutes()
       seconds = date.getSeconds()
-      "#{hours} : #{minutes} . #{seconds}"
+      $scope.time = "#{hours} : #{minutes} . #{seconds}"
 
-    @text = "controller"
+    $scope.text = "controller"
+
+    $interval(@updateClock, 1000)
   ]
-  controllerAs: 'ctrl'
+  controllerAs: "clockCtrl"
   link: (scope, element, attrs, ctrl) ->
-    scope.text = "test"
-    scope.time = ctrl.currentTime()
+    # scope.text = ctrl.text
+    # scope.time = ctrl.time
 
 angular.module('app')
 .directive 'clock', [clockDirective]
