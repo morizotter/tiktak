@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="assets/css/application.css">
   <!-- endinject -->
 </head>
-<body>
+<body ng-controller="MainController">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -26,8 +26,9 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+        <div clock=""></div>
         <h2>Todo</h2>
-        <div ng-cloak="" ng-controller="TodoController">
+        <div ng-cloak="">
           <span>{{ remaining() }} of {{ todos.length }} remaining</span>
           [
           <a href="" ng-click="archive()">archive</a>
@@ -51,7 +52,5 @@
   <script src="lib/underscore/underscore.js"></script>
   <script src="lib/angular/angular.js"></script>
   <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="assets/js/app.js"></script>
-  <script src="assets/js/sample.js"></script>
   <!-- endinject -->
 </body>

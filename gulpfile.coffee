@@ -55,7 +55,8 @@ gulp.task 'inject', ->
   underscore      = gulp.src("#{conf.tmp_dir}/lib/underscore/underscore.js" , {read: false})
   angularJs       = gulp.src("#{conf.tmp_dir}/lib/angular/angular.js" , {read: false})
   bootstrapJs     = gulp.src("#{conf.tmp_dir}/lib/bootstrap/dist/js/bootstrap.js" , {read: false})
-  js              = gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false})
+  myAngular       = gulp.src("#{conf.tmp_dir}/angular/**/*.js" , {read: false})
+  myJs            = gulp.src("#{conf.tmp_dir}/assets/js/**/*.js" , {read: false})
 
   gulp.src "#{conf.tmp_dir}/**/*.html"
   .pipe inject(
@@ -68,10 +69,17 @@ gulp.task 'inject', ->
       underscore,
       angularJs,
       bootstrapJs,
-      js
+      myAngular,
+      myJs
     ), {relative: true}
   )
   .pipe gulp.dest "#{conf.tmp_dir}/"
+
+gulp.task 'clean:tmp', (cb) ->
+  del(["#{conf.tmp_dir}/**/*"], cb)
+
+gulp.task 'clean:dist', (cb) ->
+  del(["#{conf.dist_dir}/**/*"], cb)
 
 ## COPY
 
@@ -79,14 +87,9 @@ gulp.task 'copy:dev', ->
   gulp.src ["#{conf.src_dir}/assets/image/**/*"]
   .pipe gulp.dest "#{conf.tmp_dir}/assets/image"
 
-gulp.task 'copy:prod', ->
+gulp.task 'copy:dist', ->
   gulp.src "#{conf.tmp_dir}/**/*"
   .pipe gulp.dest "#{conf.dist_dir}/"
-
-## CLEAN
-
-gulp.task 'clean', (cb)->
-  del ['public'], cb
 
 ## SERVE
 
@@ -120,20 +123,20 @@ gulp.task 'gh-pages', ->
 
 gulp.task 'serve', ->
   runSequence(
-    'build',
+    ['build'],
     ['webserver'],
-    'watch'
+    ['watch']
     )
 
 ##################################################
 # BUILD
 ##################################################
 
-gulp.task 'compile', ->
+gulp.task 'compile', ['clean:tmp'], ->
    runSequence(
     ['haml','coffee','sass','bower'],
-    'inject',
-    'copy:dev'
+    ['inject'],
+    ['copy:dev']
     )
 
 gulp.task 'build', ->
@@ -145,9 +148,8 @@ gulp.task 'build', ->
 # DEPLOY
 ##################################################
 
-gulp.task 'deploy', ->
+gulp.task 'deploy', ['clean:dist'], ->
   runSequence(
-    'build',
-    'copy:prod',
+    ['copy:dist'],
     'gh-pages'
     )
